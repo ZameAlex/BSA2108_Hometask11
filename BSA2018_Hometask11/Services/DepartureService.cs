@@ -7,32 +7,32 @@ using System.Threading.Tasks;
 
 namespace BSA2018_Hometask11.Services
 {
-    public class DepartureService : AbstractService
+    public class DepartureService : AbstractService<Departure>
     {
         public DepartureService(ApiService service, string endpoint) : base(service, endpoint)
         { }
 
-        public override int CreateEntity<Departure>(Departure newEntity)
+        public override int CreateEntity (Departure newEntity)
         {
             return base.CreateEntity(newEntity);
         }
 
-        public override bool DeleteEntity<Departure>(int id)
+        public override bool DeleteEntity (int id)
         {
-            return base.DeleteEntity<Departure>(id);
+            return base.DeleteEntity (id);
         }
 
-        public override List<Departure> GetEntities<Departure>()
+        public override List<Departure> GetEntities ()
         {
-            return base.GetEntities<Departure>();
+            return base.GetEntities ();
         }
 
-        public override Departure GetEntity<Departure>(int id)
+        public override Departure GetEntity (int id)
         {
-            return base.GetEntity<Departure>(id);
+            return base.GetEntity (id);
         }
 
-        public override bool UpdateEntity<Departure>(int id, Departure updatedEntity)
+        public override bool UpdateEntity (int id, Departure updatedEntity)
         {
             return base.UpdateEntity(id, updatedEntity);
         }

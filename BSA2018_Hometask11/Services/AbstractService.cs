@@ -1,9 +1,13 @@
 ﻿using BSA2018_Hometask11.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BSA2018_Hometask11.Services
 {
-    public abstract class AbstractService
+    public abstract class AbstractService<T> where T : Entity
     {
         protected readonly ApiService service;
         protected readonly string endpoint;
@@ -14,32 +18,32 @@ namespace BSA2018_Hometask11.Services
             this.endpoint = endpoint;
         }
 
-        public virtual List<T> GetEntities<T>() where T : Entity
+        public virtual List<T> GetEntities() 
         {
             return service.GetCollection<T>(endpoint);
         }
 
-        public virtual T GetEntity<T>(int id) where T : Entity
+        public virtual T GetEntity(int id)
         {
             return service.GetItemByID<T>(endpoint, id);
         }
 
-        public virtual int CreateEntity<T>(T newEntity) where T : Entity
+        public virtual int CreateEntity(T newEntity)
         {
 
-            var result = service.AddItem<T>(endpoint, newEntity);
+            var result = service.AddItem(endpoint, newEntity);
             return result;
         }
 
-        public virtual bool DeleteEntity<T>(int id) where T : Entity
+        public virtual bool DeleteEntity(int id) 
         {
             var result = service.DeleteItem<T>(endpoint, id);
             return result;
         }
 
-        public virtual bool UpdateEntity<T>(int id, T updatedEntity) where T : Entity
+        public virtual bool UpdateEntity(int id, T updatedEntity)
         {
-            var result = service.ChangeItem<T>(endpoint, updatedEntity, id);
+            var result = service.ChangeItem(endpoint, updatedEntity, id);
             return result;
 
         }

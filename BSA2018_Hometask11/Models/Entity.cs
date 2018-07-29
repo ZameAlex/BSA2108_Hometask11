@@ -1,4 +1,10 @@
-﻿namespace BSA2018_Hometask11.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BSA2018_Hometask11.Models
 {
     public class Entity
     {
