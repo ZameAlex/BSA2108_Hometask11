@@ -9,7 +9,7 @@ namespace BSA2018_Hometask11.Services
 {
     public class CrewService : AbstractService<Crew>
     {
-        public CrewService(ApiService service, string endpoint) : base(service, endpoint)
+        public CrewService(ApiService service) : base(service, "crew")
         { }
 
         public override int CreateEntity(Crew newEntity)

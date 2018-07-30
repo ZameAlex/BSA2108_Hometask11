@@ -9,7 +9,7 @@ namespace BSA2018_Hometask11.Services
 {
     public class TicketService : AbstractService<Ticket>
     {
-        public TicketService(ApiService service, string endpoint) : base(service, endpoint)
+        public TicketService(ApiService service) : base(service, "tickets")
         { }
 
         public override int CreateEntity (Ticket newEntity)

@@ -8,7 +8,48 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <SplitView Name="mySplitView" Grid.Row="1" Grid.Column="0" OpenPaneLength="200" IsPaneOpen="True" DisplayMode="Inline" Width="200">
+            <SplitView.Pane>
+                <ListBox SelectionChanged="ListBox_SelectionChanged">
+                    <ListBoxItem Name="planes">
+                        <TextBlock FontSize="24" Text="Planes" />
+                    </ListBoxItem>
+                    <ListBoxItem Name="pilots">
+                        <TextBlock FontSize="24" Text="Pilots" />
+                    </ListBoxItem>
+                    <ListBoxItem Name="stewardesses">
+                        <TextBlock FontSize="24" Text="Stewardesses" />
+                    </ListBoxItem>
+                    <ListBoxItem Name="crews">
+                        <TextBlock FontSize="24" Text="Crews" />
+                    </ListBoxItem>
+                    <ListBoxItem Name="flights">
+                        <TextBlock FontSize="24" Text="Flights" />
+                    </ListBoxItem>
+                    <ListBoxItem Name="departures">
+                        <TextBlock FontSize="24" Text="Depatures" />
+                    </ListBoxItem>
+                    <ListBoxItem Name="types">
+                        <TextBlock FontSize="24" Text="Types" />
+                    </ListBoxItem>
+                    <ListBoxItem Name="tickets">
+                        <TextBlock FontSize="24" Text="Tickets" />
+                    </ListBoxItem>
+                </ListBox>
+            </SplitView.Pane>
+        </SplitView>
+        <Frame Name="myFrame" Grid.Column="1" Grid.RowSpan="2"/>
     </Grid>
 </Page>

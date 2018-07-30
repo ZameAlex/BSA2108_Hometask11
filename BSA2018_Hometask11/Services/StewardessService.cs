@@ -9,7 +9,7 @@ namespace BSA2018_Hometask11.Services
 {
     public class StewardessService : AbstractService<Stewardess>
     {
-        public StewardessService(ApiService service, string endpoint) : base(service, endpoint)
+        public StewardessService(ApiService service) : base(service, "stewardess")
         { }
 
         public override int CreateEntity (Stewardess newEntity)

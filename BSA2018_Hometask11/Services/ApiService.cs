@@ -9,9 +9,20 @@ namespace BSA2018_Hometask11.Services
 {
     public class ApiService
     {
+
         Newtonsoft.Json.JsonSerializerSettings settings = new Newtonsoft.Json.JsonSerializerSettings();
         const string Base_URL = "http://localhost:51664/v1/api/";
-        public ApiService()
+
+        private static ApiService instance=null;
+
+        public static ApiService GetInstance()
+        {
+            if (instance == null)
+                instance = new ApiService();
+            return instance;
+        }
+
+        private  ApiService()
         {
             settings.DateFormatString = "YYYY-MM-DDTHH:mm:ss.FFFZ";
         }

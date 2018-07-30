@@ -9,7 +9,7 @@ namespace BSA2018_Hometask11.Services
 {
     public class PlaneService : AbstractService<Plane>
     {
-        public PlaneService(ApiService service, string endpoint) : base(service, endpoint)
+        public PlaneService(ApiService service) : base(service, "planes")
         { }
 
         public override int CreateEntity (Plane newEntity)
