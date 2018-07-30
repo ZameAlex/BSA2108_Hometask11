@@ -26,56 +26,56 @@ namespace BSA2018_Hometask11.Services
         {
             settings.DateFormatString = "YYYY-MM-DDTHH:mm:ss.FFFZ";
         }
-        public List<T> GetCollection<T>(string endpoint)
+        public async Task<List<T>> GetCollection<T>(string endpoint)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Base_URL);
-                var result = client.GetStringAsync(client.BaseAddress + endpoint).Result;
+                var result = await client.GetStringAsync(client.BaseAddress + endpoint);
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(result);
             }
         }
 
-        public T GetItemByID<T>(string endpoint, int id)
+        public async Task<T> GetItemByID<T>(string endpoint, int id)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Base_URL);
-                var result = client.GetStringAsync(client.BaseAddress + endpoint + $"/{id}").Result;
+                var result = await client.GetStringAsync(client.BaseAddress + endpoint + $"/{id}");
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(result);
             }
         }
 
-        public int AddItem<T>(string endpoint, T item)
+        public async Task<int> AddItem<T>(string endpoint, T item)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Base_URL);
                 var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(item), Encoding.UTF8, "application/json");
-                var result = client.PostAsync(client.BaseAddress + endpoint, content).Result;
+                var result = await client.PostAsync(client.BaseAddress + endpoint, content);
                 if(result.IsSuccessStatusCode)
                     return 1;
                 return -1;
             }
         }
 
-        public bool ChangeItem<T>(string endpoint, T item, int id)
+        public async Task<bool> ChangeItem<T>(string endpoint, T item, int id)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Base_URL);
                 var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(item), Encoding.UTF8, "application/json");
-                var result = client.PutAsync(client.BaseAddress + endpoint + $"/{id}", content).Result;
+                var result = await client.PutAsync(client.BaseAddress + endpoint + $"/{id}", content);
                 return result.IsSuccessStatusCode;
             }
         }
 
-        public bool DeleteItem<T>(string endpoint, int id)
+        public async Task<bool> DeleteItem<T>(string endpoint, int id)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Base_URL);
-                var result = client.DeleteAsync(client.BaseAddress + endpoint + $"/{id}").Result;
+                var result = await client.DeleteAsync(client.BaseAddress + endpoint + $"/{id}");
                 return result.StatusCode == System.Net.HttpStatusCode.NoContent;
             }
         }

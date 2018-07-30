@@ -12,27 +12,27 @@ namespace BSA2018_Hometask11.Services
         public PlaneTypeService(ApiService service) : base(service, "types")
         { }
 
-        public override int CreateEntity (PlaneType newEntity)
+        public override Task<int> CreateEntity (PlaneType newEntity)
         {
             return base.CreateEntity(newEntity);
         }
 
-        public override bool DeleteEntity (int id)
+        public override Task<bool> DeleteEntity (int id)
         {
             return base.DeleteEntity (id);
         }
 
-        public override List<PlaneType> GetEntities ()
+        public override Task<List<PlaneType>> GetEntities ()
         {
             return base.GetEntities ();
         }
 
-        public override PlaneType GetEntity (int id)
+        public override Task<PlaneType> GetEntity (int id)
         {
             return base.GetEntity (id);
         }
 
-        public override bool UpdateEntity (int id, PlaneType updatedEntity)
+        public override Task<bool> UpdateEntity (int id, PlaneType updatedEntity)
         {
             return base.UpdateEntity(id, updatedEntity);
         }

@@ -8,5 +8,9 @@ namespace BSA2018_Hometask11.Models
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
         public int Experience { get; set; }
+        public override string ToString()
+        {
+            return $"Name: {FirstName}, Last name: {LastName}";
+        }
     }
 }

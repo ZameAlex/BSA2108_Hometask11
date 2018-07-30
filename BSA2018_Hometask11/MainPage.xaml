@@ -18,7 +18,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <SplitView Name="mySplitView" Grid.Row="1" Grid.Column="0" OpenPaneLength="200" IsPaneOpen="True" DisplayMode="Inline" Width="200">
             <SplitView.Pane>

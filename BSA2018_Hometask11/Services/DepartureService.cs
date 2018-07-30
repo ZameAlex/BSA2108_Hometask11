@@ -12,27 +12,27 @@ namespace BSA2018_Hometask11.Services
         public DepartureService(ApiService service) : base(service, "depatures")
         { }
 
-        public override int CreateEntity (Departure newEntity)
+        public override Task<int> CreateEntity (Departure newEntity)
         {
             return base.CreateEntity(newEntity);
         }
 
-        public override bool DeleteEntity (int id)
+        public override Task<bool> DeleteEntity (int id)
         {
             return base.DeleteEntity (id);
         }
 
-        public override List<Departure> GetEntities ()
+        public override Task<List<Departure>> GetEntities ()
         {
             return base.GetEntities ();
         }
 
-        public override Departure GetEntity (int id)
+        public override Task<Departure> GetEntity (int id)
         {
             return base.GetEntity (id);
         }
 
-        public override bool UpdateEntity (int id, Departure updatedEntity)
+        public override Task<bool> UpdateEntity (int id, Departure updatedEntity)
         {
             return base.UpdateEntity(id, updatedEntity);
         }

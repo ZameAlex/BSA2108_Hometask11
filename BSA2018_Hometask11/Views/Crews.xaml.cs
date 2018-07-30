@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,17 +28,107 @@ namespace BSA2018_Hometask11.Views
 
         public Crews()
         {
-            this.InitializeComponent();
             ViewModel = new CrewViewModel();
+            this.InitializeComponent();
         }
 
         public CrewViewModel ViewModel;
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (List.SelectedItem == null)
+                return;
+            Pilots.SelectedItem = null;
+            Stewards.SelectedItems.Clear();
             ViewModel.SelectedCrew = (sender as ListView).SelectedItem as Crew;
-            FName.Text = ViewModel.SelectedCrew.Pilot.FirstName;
-            LName.Text = ViewModel.SelectedCrew.Pilot.LastName;
+            var pilot = Pilots.Items.SingleOrDefault(p => p.ToString() == ViewModel.SelectedCrew.Pilot.ToString());
+            Pilots.SelectedItem = pilot;
+            var stewardesses = ViewModel.SelectedCrew.Stewardess;
+            foreach(var item in stewardesses)
+            {
+                var select = Stewards.Items.FirstOrDefault(p => p.ToString() == item.ToString());
+                Stewards.SelectedItems.Add(select);
+            }
+            Edit.Visibility = Visibility.Visible;
+        }
+
+        private void AddElement(object sender, RoutedEventArgs e)
+        {
+            Edit.Visibility = Visibility.Visible;
+            ViewModel.SelectedCrew = null;
+            List.SelectedItem = null;
+            Pilots.SelectedItem = null;
+            Stewards.SelectedItems.Clear();
+        }
+
+        private async void SaveChangesAsync(object sender, RoutedEventArgs e)
+        {
+            var dialog = new MessageDialog("Are you sure?");
+            dialog.Title = "Really?";
+            dialog.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+            dialog.Commands.Add(new UICommand { Label = "Cancel", Id = 1 });
+            var res = await dialog.ShowAsync();
+
+            if ((int)res.Id == 1)
+                return;
+            if (ViewModel.SelectedCrew == null)
+                ViewModel.SelectedCrew = new Crew();
+            ViewModel.SelectedCrew.Pilot = ViewModel.Pilots.SingleOrDefault(p => p.ToString() == Pilots.SelectedItem.ToString());
+            ViewModel.SelectedCrew.Stewardess = new List<Stewardess>();
+            var stewardesses = Stewards.SelectedItems;
+            foreach (var item in stewardesses)
+            {
+                var select = ViewModel.Stewardesses.FirstOrDefault(p => p.ToString() == item.ToString());
+                ViewModel.SelectedCrew.Stewardess.Add(select);
+            }
+            ViewModel.UpdateCrew();
+
+            if (ViewModel.SelectedCrew != null)
+                ViewModel.UpdateCrew();
+            else
+                ViewModel.AddCrew();
+        }
+
+        private void Cancel(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectedCrew = null;
+            List.SelectedItem = null;
+            Edit.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void Pilots_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Pilots.SelectedItem != null && Stewards.SelectedItems != null && Stewards.SelectedItems.Any())
+                Save.IsEnabled = true;
+            else
+                Save.IsEnabled = false;
+        }
+
+        private void Stewards_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Pilots.SelectedItem != null && Stewards.SelectedItems != null && Stewards.SelectedItems.Any())
+                Save.IsEnabled = true;
+            else
+                Save.IsEnabled = false;
+        }
+
+        private async void Delete(object sender, RoutedEventArgs e)
+        {
+            var dialog = new MessageDialog("Are you sure?");
+            dialog.Title = "Really?";
+            dialog.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+            dialog.Commands.Add(new UICommand { Label = "Cancel", Id = 1 });
+            var res = await dialog.ShowAsync();
+
+            if ((int)res.Id == 0)
+            {
+                if (ViewModel.SelectedCrew != null)
+                    ViewModel.DeleteCrew();
+                Edit.Visibility = Visibility.Collapsed;
+            }
+            else
+                return;
         }
     }
 }
