@@ -37,7 +37,10 @@ namespace BSA2018_Hometask11.Views
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (List.SelectedItem == null)
+            {
+                Del.IsEnabled = false;
                 return;
+            }
             Pilots.SelectedItem = null;
             Stewards.SelectedItems.Clear();
             ViewModel.SelectedCrew = (sender as ListView).SelectedItem as Crew;
@@ -50,6 +53,7 @@ namespace BSA2018_Hometask11.Views
                 Stewards.SelectedItems.Add(select);
             }
             Edit.Visibility = Visibility.Visible;
+            Del.IsEnabled = true;
         }
 
         private void AddElement(object sender, RoutedEventArgs e)
