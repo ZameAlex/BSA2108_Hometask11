@@ -49,7 +49,7 @@ namespace BSA2018_Hometask11.Views
             Crews.SelectedItem = crews;
 
             var flight = Flights.Items.SingleOrDefault(p => p.ToString() == ViewModel.SelectedDeparture.Flight.ToString());
-            Flights.SelectedItem = crews;
+            Flights.SelectedItem = flight;
 
             Date.Text = ViewModel.SelectedDeparture.Date.ToString("yyyy-MM-dd");
 
