@@ -98,15 +98,7 @@ namespace BSA2018_Hometask11.Views
 
         }
 
-        private void Pilots_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (Pilots.SelectedItem != null && Stewards.SelectedItems != null && Stewards.SelectedItems.Any())
-                Save.IsEnabled = true;
-            else
-                Save.IsEnabled = false;
-        }
-
-        private void Stewards_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Pilots.SelectedItem != null && Stewards.SelectedItems != null && Stewards.SelectedItems.Any())
                 Save.IsEnabled = true;

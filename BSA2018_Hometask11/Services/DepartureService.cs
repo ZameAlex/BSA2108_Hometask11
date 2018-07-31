@@ -9,7 +9,7 @@ namespace BSA2018_Hometask11.Services
 {
     public class DepartureService : AbstractService<Departure>
     {
-        public DepartureService(ApiService service) : base(service, "depatures")
+        public DepartureService(ApiService service) : base(service, "departures")
         { }
 
         public override Task<int> CreateEntity (Departure newEntity)

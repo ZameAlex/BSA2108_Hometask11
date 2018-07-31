@@ -23,15 +23,16 @@ namespace BSA2018_Hometask11.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Types : Page
+    public sealed partial class Departures : Page
     {
-        public Types()
+
+        public Departures()
         {
+            ViewModel = new DepartureViewModel();
             this.InitializeComponent();
-            ViewModel = new PlaneTypeViewModel();
         }
 
-        public PlaneTypeViewModel ViewModel;
+        public DepartureViewModel ViewModel;
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -40,13 +41,18 @@ namespace BSA2018_Hometask11.Views
                 Del.IsEnabled = false;
                 return;
             }
-            ViewModel.SelectedPlaneType = (sender as ListView).SelectedItem as PlaneType;
-            Model.Text = ViewModel.SelectedPlaneType.Model;
-            Places.Text = ViewModel.SelectedPlaneType.Places.ToString();
-            MaxHeight.Text = ViewModel.SelectedPlaneType.MaxHeight.ToString();
-            MaxMass.Text = ViewModel.SelectedPlaneType.MaxMass.ToString();
-            FleightLength.Text = ViewModel.SelectedPlaneType.FleightLength.ToString();
-            Speed.Text = ViewModel.SelectedPlaneType.Speed.ToString();
+            ViewModel.SelectedDeparture = (sender as ListView).SelectedItem as Departure;
+            var planes = Planes.Items.SingleOrDefault(p => p.ToString() == ViewModel.SelectedDeparture.Plane.ToString());
+            Planes.SelectedItem = planes;
+
+            var crews = Crews.Items.SingleOrDefault(p => p.ToString() == ViewModel.SelectedDeparture.Crew.ToString());
+            Crews.SelectedItem = crews;
+
+            var flight = Flights.Items.SingleOrDefault(p => p.ToString() == ViewModel.SelectedDeparture.Flight.ToString());
+            Flights.SelectedItem = crews;
+
+            Date.Text = ViewModel.SelectedDeparture.Date.ToString("yyyy-MM-dd");
+
             Edit.Visibility = Visibility.Visible;
             Del.IsEnabled = true;
         }
@@ -54,14 +60,12 @@ namespace BSA2018_Hometask11.Views
         private void AddElement(object sender, RoutedEventArgs e)
         {
             Edit.Visibility = Visibility.Visible;
-            ViewModel.SelectedPlaneType = null;
+            ViewModel.SelectedDeparture = null;
             List.SelectedItem = null;
-            Model.Text = "";
-            Places.Text = "";
-            MaxHeight.Text = "";
-            MaxMass.Text = "";
-            FleightLength.Text = "";
-            Speed.Text = "";
+            Planes.SelectedItem = null;
+            Crews.SelectedItem = null;
+            Flights.SelectedItem = null;
+            Date.Text = "";
         }
 
         private async void SaveChangesAsync(object sender, RoutedEventArgs e)
@@ -74,62 +78,31 @@ namespace BSA2018_Hometask11.Views
 
             if ((int)res.Id == 1)
                 return;
-            if (ViewModel.SelectedPlaneType == null)
-                ViewModel.SelectedPlaneType = new PlaneType();
-            ViewModel.SelectedPlaneType.Model = Model.Text;
-            
+            if (ViewModel.SelectedDeparture == null)
+                ViewModel.SelectedDeparture = new Departure();
+            ViewModel.SelectedDeparture.Crew = ViewModel.Crews.SingleOrDefault(c => c.ToString() == Crews.SelectedItem.ToString());
+            ViewModel.SelectedDeparture.Plane = ViewModel.Planes.SingleOrDefault(c => c.ToString() == Planes.SelectedItem.ToString());
+            ViewModel.SelectedDeparture.Flight = ViewModel.Flights.SingleOrDefault(c => c.ToString() == Flights.SelectedItem.ToString());
             try
             {
-                ViewModel.SelectedPlaneType.Places = Int32.Parse(Places.Text);
+                ViewModel.SelectedDeparture.Date = DateTime.Parse(Date.ToString());
             }
             catch (Exception)
             { }
 
-
-            try
-            {
-                ViewModel.SelectedPlaneType.MaxHeight = Int32.Parse(MaxHeight.Text);
-            }
-            catch (Exception)
-            { }
-
-            try
-            {
-                ViewModel.SelectedPlaneType.MaxMass = Int32.Parse(MaxMass.Text);
-            }
-            catch (Exception)
-            { }
-
-            try
-            {
-                ViewModel.SelectedPlaneType.FleightLength = Int32.Parse(FleightLength.Text);
-            }
-            catch (Exception)
-            { }
-
-            try
-            {
-                ViewModel.SelectedPlaneType.Speed = Int32.Parse(Speed.Text);
-            }
-            catch (Exception)
-            { }
-
-            if (ViewModel.SelectedPlaneType != null)
-                ViewModel.UpdatePlaneType();
+            if (ViewModel.SelectedDeparture != null)
+                ViewModel.UpdateDeparture();
             else
-                ViewModel.AddPlaneType();
+                ViewModel.AddDeparture();
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
         {
-            ViewModel.SelectedPlaneType = null;
+            ViewModel.SelectedDeparture = null;
             List.SelectedItem = null;
             Edit.Visibility = Visibility.Collapsed;
 
         }
-
-        
-
 
         private async void Delete(object sender, RoutedEventArgs e)
         {
@@ -141,25 +114,25 @@ namespace BSA2018_Hometask11.Views
 
             if ((int)res.Id == 0)
             {
-                if (ViewModel.SelectedPlaneType != null)
-                    ViewModel.DeletePlaneType();
+                if (ViewModel.SelectedDeparture != null)
+                    ViewModel.DeleteDeparture();
                 Edit.Visibility = Visibility.Collapsed;
             }
             else
                 return;
         }
 
-        private void Model_TextChanged(object sender, TextChangedEventArgs e)
+        private void Date_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Model.Text != "" && Places.Text != "")
+            if(String.IsNullOrWhiteSpace(Date.Text) && Crews.SelectedItem!= null && Planes.SelectedItem != null && Flights.SelectedItem != null)
                 Save.IsEnabled = true;
             else
                 Save.IsEnabled = false;
         }
 
-        private void Places_TextChanged(object sender, TextChangedEventArgs e)
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Model.Text != "" && Places.Text != "")
+            if (String.IsNullOrWhiteSpace(Date.Text) && Crews.SelectedItem != null && Planes.SelectedItem != null && Flights.SelectedItem != null)
                 Save.IsEnabled = true;
             else
                 Save.IsEnabled = false;

@@ -7,6 +7,11 @@ namespace BSA2018_Hometask11.Models
         public string Name { get; set; }
         public PlaneType Type { get; set; }
         public DateTime Created { get; set; }
-        public DateTime Expired { get; set; }
+        public TimeSpan Expired { get; set; }
+
+        public override string ToString()
+        {
+            return $"Name: {this.Name}, Type: {this.Type}";
+        }
     }
 }

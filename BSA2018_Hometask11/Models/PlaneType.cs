@@ -8,5 +8,10 @@
         public int FleightLength { get; set; }
         public int MaxMass { get; set; }
         public int MaxHeight { get; set; }
+
+        public override string ToString()
+        {
+            return $"Model: {this.Model}, Places: {this.Places}";
+        }
     }
 }
