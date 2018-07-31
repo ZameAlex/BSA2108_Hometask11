@@ -44,7 +44,7 @@ namespace BSA2018_Hometask11.Views
             Name.Text = ViewModel.SelectedPlane.Name;
             Created.Text = ViewModel.SelectedPlane.Created.ToString("yyyy-MM-dd");
             Expires.Text = ViewModel.SelectedPlane.Created.ToString();
-            Types.SelectedItem = Types.Items.Where(t=>t.ToString()==ViewModel.SelectedPlane.Type.ToString());
+            Types.SelectedItem = Types.Items.SingleOrDefault(t=>(t as PlaneType).Id==ViewModel.SelectedPlane.Type.Id);
             Edit.Visibility = Visibility.Visible;
             Del.IsEnabled = true;
         }

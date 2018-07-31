@@ -49,7 +49,7 @@ namespace BSA2018_Hometask11.Views
             var tickets = ViewModel.SelectedFlight.Tickets;
             foreach (var item in tickets)
             {
-                var select = Tickets.Items.FirstOrDefault(p => p.ToString() == item.ToString());
+                var select = Tickets.Items.SingleOrDefault(p => (p as Ticket).Id == item.Id);
                 Tickets.SelectedItems.Add(select);
             }
             Edit.Visibility = Visibility.Visible;
@@ -66,7 +66,7 @@ namespace BSA2018_Hometask11.Views
             DesTime.Text = "";
             DPoint.Text = "";
             DesPoint.Text = "";
-            Tickets.SelectedItem = null;
+            Tickets.SelectedItems.Clear();
         }
 
         private async void SaveChangesAsync(object sender, RoutedEventArgs e)
