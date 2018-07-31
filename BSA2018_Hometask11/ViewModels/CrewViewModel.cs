@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace BSA2018_Hometask11.ViewModels
 {
-    public class CrewViewModel : BaseViewModel
+    public class CrewViewModel 
     {
         private CrewService service;
         private PilotService pilotService;

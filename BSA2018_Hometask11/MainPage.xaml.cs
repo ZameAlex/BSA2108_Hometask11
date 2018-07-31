@@ -32,6 +32,8 @@ namespace BSA2018_Hometask11
         {
             if (crews.IsSelected)
                 myFrame.Navigate(typeof(Crews));
+            if (pilots.IsSelected)
+                myFrame.Navigate(typeof(Pilots));
         }
 
     }

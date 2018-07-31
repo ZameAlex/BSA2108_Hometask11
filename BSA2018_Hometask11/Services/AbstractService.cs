@@ -43,6 +43,7 @@ namespace BSA2018_Hometask11.Services
 
         public virtual async Task<bool> UpdateEntity(int id, T updatedEntity)
         {
+            updatedEntity.Id = 0;
             var result = await service.ChangeItem(endpoint, updatedEntity, id);
             return result;
 
