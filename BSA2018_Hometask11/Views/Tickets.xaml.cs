@@ -23,16 +23,15 @@ namespace BSA2018_Hometask11.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Crews : Page
+    public sealed partial class Tickets : Page
     {
-
-        public Crews()
+        public Tickets()
         {
-            ViewModel = new CrewViewModel();
             this.InitializeComponent();
+            ViewModel = new TicketViewModel();
         }
 
-        public CrewViewModel ViewModel;
+        public TicketViewModel ViewModel;
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -41,15 +40,9 @@ namespace BSA2018_Hometask11.Views
                 Del.IsEnabled = false;
                 return;
             }
-            ViewModel.SelectedCrew = (sender as ListView).SelectedItem as Crew;
-            var pilot = Pilots.Items.SingleOrDefault(p => p.ToString() == ViewModel.SelectedCrew.Pilot.ToString());
-            Pilots.SelectedItem = pilot;
-            var stewardesses = ViewModel.SelectedCrew.Stewardess;
-            foreach(var item in stewardesses)
-            {
-                var select = Stewards.Items.FirstOrDefault(p => p.ToString() == item.ToString());
-                Stewards.SelectedItems.Add(select);
-            }
+            ViewModel.SelectedTicket = (sender as ListView).SelectedItem as Ticket;
+            Flight.SelectedItem = Flight.Items.SingleOrDefault(f=>f.ToString()==ViewModel.SelectedTicket.Number.ToString());
+            Price.Text = ViewModel.SelectedTicket.Price.ToString();
             Edit.Visibility = Visibility.Visible;
             Del.IsEnabled = true;
         }
@@ -57,10 +50,10 @@ namespace BSA2018_Hometask11.Views
         private void AddElement(object sender, RoutedEventArgs e)
         {
             Edit.Visibility = Visibility.Visible;
-            ViewModel.SelectedCrew = null;
+            ViewModel.SelectedTicket = null;
             List.SelectedItem = null;
-            Pilots.SelectedItem = null;
-            Stewards.SelectedItems.Clear();
+            Flight.SelectedItem = null;
+            Price.Text = "";
         }
 
         private async void SaveChangesAsync(object sender, RoutedEventArgs e)
@@ -73,46 +66,35 @@ namespace BSA2018_Hometask11.Views
 
             if ((int)res.Id == 1)
                 return;
-            if (ViewModel.SelectedCrew == null)
-                ViewModel.SelectedCrew = new Crew();
-            ViewModel.SelectedCrew.Pilot = ViewModel.Pilots.SingleOrDefault(p => p.ToString() == Pilots.SelectedItem.ToString());
-            ViewModel.SelectedCrew.Stewardess = new List<Stewardess>();
-            var stewardesses = Stewards.SelectedItems;
-            foreach (var item in stewardesses)
+            if (ViewModel.SelectedTicket == null)
+                ViewModel.SelectedTicket = new Ticket();
+            try
             {
-                var select = ViewModel.Stewardesses.FirstOrDefault(p => p.ToString() == item.ToString());
-                ViewModel.SelectedCrew.Stewardess.Add(select);
+                ViewModel.SelectedTicket.Number = Guid.Parse(Flight.SelectedItem.ToString());
             }
+            catch (Exception)
+            { }
+            try
+            {
+                ViewModel.SelectedTicket.Price = Int32.Parse(Price.Text);
+            }
+            catch (Exception)
+            { }
 
-            if (ViewModel.SelectedCrew != null)
-                ViewModel.UpdateCrew();
+            if (ViewModel.SelectedTicket != null)
+                ViewModel.UpdateTicket();
             else
-                ViewModel.AddCrew();
+                ViewModel.AddTicket();
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
         {
-            ViewModel.SelectedCrew = null;
+            ViewModel.SelectedTicket = null;
             List.SelectedItem = null;
             Edit.Visibility = Visibility.Collapsed;
 
         }
 
-        private void Pilots_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (Pilots.SelectedItem != null && Stewards.SelectedItems != null && Stewards.SelectedItems.Any())
-                Save.IsEnabled = true;
-            else
-                Save.IsEnabled = false;
-        }
-
-        private void Stewards_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (Pilots.SelectedItem != null && Stewards.SelectedItems != null && Stewards.SelectedItems.Any())
-                Save.IsEnabled = true;
-            else
-                Save.IsEnabled = false;
-        }
 
         private async void Delete(object sender, RoutedEventArgs e)
         {
@@ -124,12 +106,36 @@ namespace BSA2018_Hometask11.Views
 
             if ((int)res.Id == 0)
             {
-                if (ViewModel.SelectedCrew != null)
-                    ViewModel.DeleteCrew();
+                if (ViewModel.SelectedTicket != null)
+                    ViewModel.DeleteTicket();
                 Edit.Visibility = Visibility.Collapsed;
             }
             else
                 return;
+        }
+
+        private void LName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Price.Text != null && Flight.SelectedItem!=null)
+                Save.IsEnabled = true;
+            else
+                Save.IsEnabled = false;
+        }
+
+        private void Birthday_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Price.Text != null && Flight.SelectedItem != null)
+                Save.IsEnabled = true;
+            else
+                Save.IsEnabled = false;
+        }
+
+        private void Flight_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Price.Text != null && Flight.SelectedItem != null)
+                Save.IsEnabled = true;
+            else
+                Save.IsEnabled = false;
         }
     }
 }

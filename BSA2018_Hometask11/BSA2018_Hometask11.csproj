@@ -119,17 +119,29 @@
     <Compile Include="Services\PilotService.cs" />
     <Compile Include="Services\CrewService.cs" />
     <Compile Include="Services\ApiService.cs" />
+    <Compile Include="ViewModels\PlaneViewModel.cs" />
+    <Compile Include="ViewModels\FlightViewModel.cs" />
+    <Compile Include="ViewModels\TicketViewModel.cs" />
     <Compile Include="ViewModels\StewardessViewModel.cs" />
     <Compile Include="ViewModels\PilotViewModel.cs" />
     <Compile Include="ViewModels\CrewViewModel.cs" />
     <Compile Include="Views\Crews.xaml.cs">
       <DependentUpon>Crews.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Flights.xaml.cs">
+      <DependentUpon>Flights.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pilots.xaml.cs">
       <DependentUpon>Pilots.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Stewardesses.xaml.cs">
       <DependentUpon>Stewardesses.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tickets.xaml.cs">
+      <DependentUpon>Tickets.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Types.xaml.cs">
+      <DependentUpon>Types.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -161,11 +173,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Flights.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pilots.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Stewardesses.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tickets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Types.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

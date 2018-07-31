@@ -34,6 +34,12 @@ namespace BSA2018_Hometask11
                 myFrame.Navigate(typeof(Crews));
             if (pilots.IsSelected)
                 myFrame.Navigate(typeof(Pilots));
+            if (tickets.IsSelected)
+                myFrame.Navigate(typeof(Tickets));
+            if (stewardesses.IsSelected)
+                myFrame.Navigate(typeof(Stewardesses));
+            if (flights.IsSelected)
+                myFrame.Navigate(typeof(Flights));
         }
 
     }
